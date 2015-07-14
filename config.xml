@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CONFIGS>
+	<WIT name="lampe_chambre" ipurl="ipurl" nomled="nomled" textevoix="J\'ai allumé le lustre de la chambre"></WIT>
+	<WIT name="lustre_chambre"  ipurl="ipurl" nomled="nomled" textevoix="J\'ai allumé le lustre de la chambre"></WIT>
+</CONFIGS>
