@@ -23,7 +23,7 @@ db = MySQLdb.connect(valeur.attributes['ip'].value, valeur.attributes['login'].v
 dbSQL = db.cursor()
 
 
-objet = {}
+Domotic = {}
 
 tree = xml.dom.minidom.parse("config.xml")
 valeurListe = tree.getElementsByTagName("WIT")
@@ -32,10 +32,11 @@ for valeur in valeurListe:
     print valeur.attributes['name'].value
     print valeur.attributes['ipurl'].value
     print valeur.attributes['nomled'].value
-    print valeur.attributes['textevoix'].value
+    print valeur.attributes['textevoixON'].value
+    print valeur.attributes['textevoixOFF'].value
     print ("-------------------------------")
     
-    objet[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textevoix'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, dbSQL)
+    Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textevoixON'].value, valeur.attributes['textevoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, dbSQL)
 
 """objet["lampe_chambre"].commande('om')
 objet["lustre_chambre"].commande('on')"""
