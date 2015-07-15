@@ -13,6 +13,12 @@ from ClassDomotic import *
 
 access_token = 'K3RY7CDERSUFT5KJTYJH6IVKKDBSI2WH' # Code Wit
 
+#Fonction appelée quand vient l'heure de fermer notre programme
+def fermer_programme(signal, frame):
+    parole("Fermeture programme au revoir a bientot")
+    wit.close()
+    sys.exit(0)
+
 # Connexion du signal à notre fonction
 signal.signal(signal.SIGINT, fermer_programme)
 
@@ -40,11 +46,6 @@ for valeur in valeurListe:
     print ("-------------------------------")
     Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textvoixON'].value, valeur.attributes['textvoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, dbSQL)
 
-#Fonction appelée quand vient l'heure de fermer notre programme
-def fermer_programme(signal, frame):
-    parole("Fermeture programme au revoir a bientot")
-    wit.close()
-    sys.exit(0)
 	
 # Fonction lecture orale d'un texte
 def parole(texte):
@@ -70,7 +71,6 @@ def ecoute(passage): # Valeurs passage: 1 Mise en route, 2 Ecoute OK en attente,
 def texte_json(response):
     js= json.loads(response)
     print(js['_text'])
-    print(js[u'outcomes'][0][u'intent'])
     if js['_text'] == None:
         ecoute(4)
     else:
