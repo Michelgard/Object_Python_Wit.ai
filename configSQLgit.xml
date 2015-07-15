@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CONFIGS>
+	<SQL ip="195.xxx.11.xxx" dbase="nom base" login="login" mdp="mot de passe"></SQL>
+</CONFIGS>
+
