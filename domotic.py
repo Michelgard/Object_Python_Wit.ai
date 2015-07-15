@@ -48,7 +48,7 @@ def fermer_programme(signal, frame):
 	
 # Fonction lecture orale d'un texte
 def parole(texte):
-    cmd = "espeak -x -v mb/mb-fr1 \"%s\" | mbrola -e -C \"n n2\" /opt/mbrola/fr1/fr1 - -.au | paplay"
+    cmd = 'espeak -v mb-fr1 \"%s\" -s 130'
     os.system(cmd % texte)
 
 # Fonction Mise en route de l'écoute
@@ -62,8 +62,7 @@ def ecoute(passage): # Valeurs passage: 1 Mise en route, 2 Ecoute OK en attente,
 	parole("Merci de répéter la commande, je n'ai pas compris")
     
     while response == None:	
-    response = wit.voice_query_auto(access_token)
-    print('Response: {}'.format(response))
+    	response = wit.voice_query_auto(access_token)
 
     texte_json(response)
 
