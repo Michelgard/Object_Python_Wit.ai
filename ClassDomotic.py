@@ -9,7 +9,8 @@ class ClassDomotic:
 		modifier la valeur de la base de données suivant les ordres de Wit.Ai.
 	
 Les arguments:
-text = le texte de la voix au passge de la commande.
+textON = le texte de la voix au passage de la commande ON.
+textOFF = le texte de la voix au passage de la commande OFF.
 IPVal =  la valeur de l'IP pour l'URL
 Led = sur quel lampe va la commande.
 dbSQL = connexion base SQL
@@ -18,10 +19,11 @@ ComVal = la valeur de la commande ON ou OFF.
 
 """
 
-	def __init__(self, text, IPVal, Led, dbSQL):
+	def __init__(self, textON, textOFF, IPVal, Led, dbSQL):
 		"""Constructeur de la classe. Chaque attribut va être instancié
 			avec une valeur"""
-		self._text = text
+		self._textON = textON
+		self._textOFF = textOFF
 		self._IPVal = IPVal
 		self._Led = Led
 		self._dbSQL = dbSQL
@@ -62,7 +64,10 @@ ComVal = la valeur de la commande ON ou OFF.
 				if (requestURL):
 					requestSQL = self._sendSQL(self._dbSQL, self._Led, ComVal)
 					if (requestSQL):
-						self._parole(self._text)
+						if (ComVal == 'ON'):
+							self._parole(self._textON)
+						else:
+							self._parole(self._textOFF)
 					else:
 						self._parole("Une erreur s'est produite, merci de redire la commande")
 		else :
