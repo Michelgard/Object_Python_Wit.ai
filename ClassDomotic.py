@@ -32,7 +32,7 @@ ComVal = la valeur de la commande ON ou OFF.
 		""" Fonction qui donne la voix suivant le texte passé.
 			Le texte peut être dépendant de l'objet créé par l'argument text de INIT
 			ou un texte d'erreur contenu dans la class"""
-		cmd = "espeak -x -v mb/mb-fr1 \"%s\" | mbrola -e -C \"n n2\" /opt/mbrola/fr1/fr1 - -.au | paplay"
+		cmd = 'espeak -v mb-fr1 \"%s\" -s 130'
 		os.system(cmd % textClass)
 		print (textClass)
 		
