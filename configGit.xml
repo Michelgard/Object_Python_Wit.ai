@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CONFIGS>
+        <WIT name="ecran" ipurl="ipurl" nomled="LED3" textvoixON="J'ai allume l'écran" textvoixOFF="J'ai eteint l'ecran"></WIT>
+        <WIT name="lustre_chambre"  ipurl="ipurl" nomled="LEDA" textvoixON="J'ai allume le lustre de la chambre" textvoixOFF="J'ai eteint le lustre de la cha$
+        <WIT name="lustre_chambre"  ipurl="ipurl" nomled="LEDA" textvoixON="J'ai allume le lustre de la chambre" textvoixOFF="J'ai eteint le lustre de la cha$
+</CONFIGS>
+
