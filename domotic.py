@@ -26,11 +26,6 @@ signal.signal(signal.SIGINT, fermer_programme)
 tree = xml.dom.minidom.parse("configSQL.xml")
 valeurListe = tree.getElementsByTagName("SQL")
 for valeur in valeurListe:
-    print valeur.attributes['ip'].value
-    print valeur.attributes['dbase'].value
-    print valeur.attributes['login'].value
-    print valeur.attributes['mdp'].value
-    print ("-------------------------------")
     #connexion  à la base de données
     db = MySQLdb.connect(valeur.attributes['ip'].value, valeur.attributes['login'].value, valeur.attributes['mdp'].value, valeur.attributes['dbase'].value)
     dbSQL = db.cursor()
@@ -39,18 +34,11 @@ Domotic = {} #construction des objets.
 tree = xml.dom.minidom.parse("config.xml")
 valeurListe = tree.getElementsByTagName("WIT")
 for valeur in valeurListe:
-    print valeur.attributes['name'].value
-    print valeur.attributes['ipurl'].value
-    print valeur.attributes['nomled'].value
-    print valeur.attributes['textvoixON'].value
-    print valeur.attributes['textvoixOFF'].value
-    print ("-------------------------------")
     Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textvoixON'].value, valeur.attributes['textvoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, db, dbSQL)
-
 	
 # Fonction lecture orale d'un texte
 def parole(texte):
-    cmd = 'espeak -v mb-fr1 \"%s\" -s 120'
+    cmd = 'espeak -v mb-fr1 \"%s\" -s 160'
     os.system(cmd % texte)
 
 # Fonction Mise en route de l'écoute
@@ -71,7 +59,6 @@ def ecoute(passage): # Valeurs passage: 1 Mise en route, 2 Ecoute OK en attente,
 #Fonction analyse retour écoute micro en JSON
 def texte_json(response):
     js= json.loads(response)
-    print(js['_text'])
     if js['_text'] == None:
         ecoute(4)
     else:
@@ -92,14 +79,13 @@ def analyse_texte(js):
 		val_On_Off = js[u'outcomes'][0][u'entities'][u'on_off'][0][u'value']
 	except NameError:
 		ecoute(3)
-
 	try:			
 		Domotic[intent].commande(val_On_Off)
 	except NameError:
 		ecoute(3)
     ecoute(2)
 
-parole("Je me prépare")	
+parole("Je prépare les données d'installation")	
 wit.init() #Lancement de wit
 # Mise en route et lancement de l'écoute	
 ecoute(1)

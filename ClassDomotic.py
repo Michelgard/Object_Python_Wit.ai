@@ -35,7 +35,7 @@ ComVal = la valeur de la commande ON ou OFF.
 			ou un texte d'erreur contenu dans la class"""
 		print (textClass)
 
-		cmd = 'espeak -v mb-fr1 \"%s\" -s 130'
+		cmd = 'espeak -v mb-fr1 \"%s\" -s 160'
 		os.system(cmd % textClass)
 		
 	def _sendURL(self, IPVal, Led, ComVal): 
@@ -44,41 +44,23 @@ ComVal = la valeur de la commande ON ou OFF.
 		try:
 			print(url)
 			resultat = urllib.urlopen(url)
-		except NameError:
+		except:
 			return False
 		return True	
 
 	def _sendSQL(self, db, dbSQL, Led, ComVal):
 		""" Modification de la valeur dans la base de donnée suite à la commande"""
-		if (Led =="LED1"):
-                        Led = "1"
-                if (Led =="LED2"):
-                        Led = "2"
-                if (Led =="LED3"):
-                        Led = "3"
-                if (Led =="LEDA"):
-                        Led = "4"
-
 		sql = "UPDATE Position_prise SET  Valeur_Prise ='" + ComVal + "' WHERE  N_Prise = '" + Led + "'"
 		print (sql)
 		try:
 			dbSQL.execute(sql)
 			db.commit()			
-		except NameError:
+		except:
 			return False		
 		return True #reponseSQL
 	
 	def _lectureSQL(self, dbSQL,  Led):
 		"""Lecture de la valeur de la base sql pour vérifier la concordance de la commande """
-		if (Led =="LED1"):
-			Led = "1"
-		if (Led =="LED2"):
-                        Led = "2"
-		if (Led =="LED3"):
-                        Led = "3"
-		if (Led =="LEDA"):
-                        Led = "4"
-		
 		sql = "select Valeur_Prise from Position_prise where N_Prise ='" + Led + "'"
 		try:
 			dbSQL.execute(sql)
@@ -86,7 +68,7 @@ ComVal = la valeur de la commande ON ou OFF.
 			for row in results:
       				fname = row[0]
 				print(fname)
-		except NameError:
+		except:
 			return False
 		return fname
 	
