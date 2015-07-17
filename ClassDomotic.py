@@ -62,13 +62,14 @@ ComVal = la valeur de la commande ON ou OFF.
 	def _lectureSQL(self, dbSQL,  Led):
 		"""Lecture de la valeur de la base sql pour vérifier la concordance de la commande """
 		sql = "select Valeur_Prise from Position_prise where N_Prise ='" + Led + "'"
+		print(sql)	
 		try:
 			dbSQL.execute(sql)
 			results = dbSQL.fetchall()
 			for row in results:
       				fname = row[0]
 				print(fname)
-		except:
+		except OperationalError:
 			return False
 		return fname
 	
@@ -96,6 +97,5 @@ ComVal = la valeur de la commande ON ou OFF.
 							self._parole("Une erreur s'est produite, merci de redire la commande")
 					else:
 						self._parole("Une erreur s'est produite. Merci de refaire la commande")
-
 		else :
 			self._parole("La commande n'est pas valide !")
