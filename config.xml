@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<CONFIGS>
-	<WIT name="ecran" ipurl="192.168.0.34" nomled="LED3" textvoixON="J'ai allumé l'écran" textvoixOFF="J'ai éteint l'écran"></WIT>
-	<WIT name="lustre_chambre"  ipurl="192.168.0.34" nomled="LEDA" textvoixON="J'ai allumé le lustre de la chambre" textvoixOFF="J'ai éteint le lustre de la chambre"></WIT>
-	<WIT name="lustre_chambre"  ipurl="192.168.0.34" nomled="LEDA" textvoixON="J'ai allumé le lustre de la chambre" textvoixOFF="J'ai éteint le lustre de la chambre"></WIT>
-</CONFIGS>

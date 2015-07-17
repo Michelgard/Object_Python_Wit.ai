@@ -15,8 +15,9 @@ access_token = 'K3RY7CDERSUFT5KJTYJH6IVKKDBSI2WH' # Code Wit
 
 #Fonction appelée quand vient l'heure de fermer notre programme
 def fermer_programme(signal, frame):
-    parole("Fermeture programme au revoir a bientot")
+    parole("Fermeture du programme. Au revoir a bientot")
     wit.close()
+    db.close()
     sys.exit(0)
 
 # Connexion du signal à notre fonction
@@ -44,21 +45,21 @@ for valeur in valeurListe:
     print valeur.attributes['textvoixON'].value
     print valeur.attributes['textvoixOFF'].value
     print ("-------------------------------")
-    Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textvoixON'].value, valeur.attributes['textvoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, dbSQL)
+    Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textvoixON'].value, valeur.attributes['textvoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, db, dbSQL)
 
 	
 # Fonction lecture orale d'un texte
 def parole(texte):
-    cmd = 'espeak -v mb-fr1 \"%s\" -s 130'
+    cmd = 'espeak -v mb-fr1 \"%s\" -s 120'
     os.system(cmd % texte)
 
 # Fonction Mise en route de l'écoute
 def ecoute(passage): # Valeurs passage: 1 Mise en route, 2 Ecoute OK en attente, 3 Commande pas comprise, 4 pas de message 
     response = None
     if passage == 1:
-	parole("Je suis pret")
+	parole("Je suis a ton écoute")
     if passage == 2:
-	parole("Je suis prèt pour une autre commande")
+	parole("Je suis a l'écoute pour une autre commande")
     if passage == 3:
 	parole("Merci de répéter la commande, je n'ai pas compris")
     
@@ -91,8 +92,11 @@ def analyse_texte(js):
 		val_On_Off = js[u'outcomes'][0][u'entities'][u'on_off'][0][u'value']
 	except NameError:
 		ecoute(3)
-			
-	Domotic[intent].commande(val_On_Off)	
+
+	try:			
+		Domotic[intent].commande(val_On_Off)
+	except NameError:
+		ecoute(3)
     ecoute(2)
 
 parole("Je me prépare")	
