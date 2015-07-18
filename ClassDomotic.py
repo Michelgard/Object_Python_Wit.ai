@@ -19,31 +19,26 @@ ComVal = la valeur de la commande ON ou OFF.
 
 """
 
-	def __init__(self, textON, textOFF, IPVal, Led, db, dbSQL):
+	def __init__(self, textON, textOFF, IPVal, Led):
 		"""Constructeur de la classe. Chaque attribut va être instancié
 			avec une valeur"""
 		self._textON = textON
 		self._textOFF = textOFF
 		self._IPVal = IPVal
 		self._Led = Led
-		self._db = db
-		self._dbSQL = dbSQL
 		
 	def _parole(self, textClass):
 		""" Fonction qui donne la voix suivant le texte passé.
 			Le texte peut être dépendant de l'objet créé par l'argument text de INIT
 			ou un texte d'erreur contenu dans la class"""
-		print (textClass)
 
-#		cmd = 'espeak -v mb-fr1 \"%s\" -s 160'
-		cmd = './speech.sh \"%s\"'
+		cmd = '/home/pi/Object_Python_Wit.ai/speech.sh \"%s\"'
 		os.system(cmd % textClass)
 		
 	def _sendURL(self, IPVal, Led, ComVal): 
 		"""envoie la commande On ou OFF sur la bonne led """
 		url = "http://" + IPVal + '/?' +  Led + '=' + ComVal
 		try:
-			print(url)
 			resultat = urllib.urlopen(url)
 		except:
 			return False
@@ -52,13 +47,12 @@ ComVal = la valeur de la commande ON ou OFF.
 	def _sendSQL(self, db, dbSQL, Led, ComVal):
 		""" Modification de la valeur dans la base de donnée suite à la commande"""
 		sql = "UPDATE Position_prise SET  Valeur_Prise ='" + ComVal + "' WHERE  N_Prise = '" + Led + "'"
-		print (sql)
 		try:
 			dbSQL.execute(sql)
 			db.commit()			
 		except:
 			return False		
-		return True #reponseSQL
+		return True
 	
 	def _lectureSQL(self, dbSQL,  Led):
 		"""Lecture de la valeur de la base sql pour vérifier la concordance de la commande """
@@ -68,27 +62,27 @@ ComVal = la valeur de la commande ON ou OFF.
 			dbSQL.execute(sql)
 			results = dbSQL.fetchall()
 			for row in results:
-      				fname = row[0]
+  				fname = row[0]
 				print(fname)
-		except OperationalError:
+		except OperationalError as e:
+			reconnect()
 			return False
 		return fname
 	
-	def commande(self, ComVal):
+	def commande(self, ComVal, db, dbSQL):
 		""" Fonction de la class qui fait la commande ou pas si il n'est pas pertinant"""
 		ComVal = ComVal.upper()
-		print (ComVal)
 		if (ComVal == "ON" or ComVal == "OFF"):
-			valeurSQL = self._lectureSQL(self._dbSQL, self._Led)
+			valeurSQL = self._lectureSQL(dbSQL, self._Led)
 			if (valeurSQL == False):
 				self._parole("Il y une erreur de chemin sur la base de donner")
 			else:
 				if (valeurSQL == ComVal):
-					self._parole("Attention la commande a deje ete valide !")
+					self._parole("Attention la commande a deja ete valide !")
 				else:
 					requestURL = self._sendURL(self._IPVal, self._Led, ComVal)
 					if (requestURL):
-						requestSQL = self._sendSQL(self._db, self._dbSQL, self._Led, ComVal)
+						requestSQL = self._sendSQL(db, dbSQL, self._Led, ComVal)
 						if (requestSQL):
 							if (ComVal == 'ON'):
 								self._parole(self._textON)

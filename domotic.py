@@ -17,29 +17,20 @@ access_token = 'K3RY7CDERSUFT5KJTYJH6IVKKDBSI2WH' # Code Wit
 def fermer_programme(signal, frame):
     parole("Fermeture du programme. Au revoir a bientot")
     wit.close()
-    db.close()
     sys.exit(0)
 
 # Connexion du signal à notre fonction
 signal.signal(signal.SIGINT, fermer_programme)
 
-tree = xml.dom.minidom.parse("configSQL.xml")
-valeurListe = tree.getElementsByTagName("SQL")
-for valeur in valeurListe:
-    #connexion  à la base de données
-    db = MySQLdb.connect(valeur.attributes['ip'].value, valeur.attributes['login'].value, valeur.attributes['mdp'].value, valeur.attributes['dbase'].value)
-    dbSQL = db.cursor()
-
 Domotic = {} #construction des objets.
-tree = xml.dom.minidom.parse("config.xml")
+tree = xml.dom.minidom.parse("/home/pi/Object_Python_Wit.ai/config.xml")
 valeurListe = tree.getElementsByTagName("WIT")
 for valeur in valeurListe:
-    Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textvoixON'].value, valeur.attributes['textvoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value, db, dbSQL)
+    Domotic[valeur.attributes['name'].value]= ClassDomotic(valeur.attributes['textvoixON'].value, valeur.attributes['textvoixOFF'].value, valeur.attributes['ipurl'].value, valeur.attributes['nomled'].value)
 	
 # Fonction lecture orale d'un texte
 def parole(texte):
-#    cmd = 'espeak -v mb-fr1 \"%s\" -s 160'
-    cmd = './speech.sh \"%s\"'
+    cmd = '/home/pi/Object_Python_Wit.ai/speech.sh \"%s\"'
     os.system(cmd % texte)
 
 # Fonction Mise en route de l'écoute
@@ -81,7 +72,14 @@ def analyse_texte(js):
 	except NameError:
 		ecoute(3)
 	try:			
-		Domotic[intent].commande(val_On_Off)
+		tree = xml.dom.minidom.parse("/home/pi/Object_Python_Wit.ai/configSQL.xml")
+		valeurListe = tree.getElementsByTagName("SQL")
+		for valeur in valeurListe:
+    		#connexion  à la base de données
+    			db = MySQLdb.connect(valeur.attributes['ip'].value, valeur.attributes['login'].value, valeur.attributes['mdp'].value, valeur.attributes['dbase'].value)
+    			dbSQL = db.cursor()
+		Domotic[intent].commande(val_On_Off, db, dbSQL)
+		db.close()
 	except NameError:
 		ecoute(3)
     ecoute(2)
