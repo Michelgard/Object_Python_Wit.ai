@@ -35,7 +35,8 @@ ComVal = la valeur de la commande ON ou OFF.
 			ou un texte d'erreur contenu dans la class"""
 		print (textClass)
 
-		cmd = 'espeak -v mb-fr1 \"%s\" -s 160'
+#		cmd = 'espeak -v mb-fr1 \"%s\" -s 160'
+		cmd = './speech.sh \"%s\"'
 		os.system(cmd % textClass)
 		
 	def _sendURL(self, IPVal, Led, ComVal): 
@@ -80,10 +81,10 @@ ComVal = la valeur de la commande ON ou OFF.
 		if (ComVal == "ON" or ComVal == "OFF"):
 			valeurSQL = self._lectureSQL(self._dbSQL, self._Led)
 			if (valeurSQL == False):
-				self._parole("Il y une erreur de chemin sur la base de données")
+				self._parole("Il y une erreur de chemin sur la base de donner")
 			else:
 				if (valeurSQL == ComVal):
-					self._parole("Attention la commande a déjà été validé !")
+					self._parole("Attention la commande a deje ete valide !")
 				else:
 					requestURL = self._sendURL(self._IPVal, self._Led, ComVal)
 					if (requestURL):
@@ -94,8 +95,8 @@ ComVal = la valeur de la commande ON ou OFF.
 							else:
 								self._parole(self._textOFF)
 						else:
-							self._parole("Une erreur s'est produite, merci de redire la commande")
+							self._parole("Une erreur s\'est produite, merci de redire la commande")
 					else:
 						self._parole("Une erreur s'est produite. Merci de refaire la commande")
 		else :
-			self._parole("La commande n'est pas valide !")
+			self._parole("La commande n\'est pas valide !")
