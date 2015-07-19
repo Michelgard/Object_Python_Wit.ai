@@ -37,11 +37,11 @@ def parole(texte):
 def ecoute(passage): # Valeurs passage: 1 Mise en route, 2 Ecoute OK en attente, 3 Commande pas comprise, 4 pas de message 
     response = None
     if passage == 1:
-	parole("Je suis a ton ecoute")
+	parole("Je suis za ton ecoute")
     if passage == 2:
-	parole("Je suis a l\'ecoute pour une autre commande")
+	parole("Je suis za l'ecoute pour une autre commande")
     if passage == 3:
-	parole("Merci de repeter la commande, je n\'ai pas compris")
+	parole("Merci de reipaitai la commande, je n'ai pas compris")
     
     while response == None:	
     	response = wit.voice_query_auto(access_token)
@@ -64,7 +64,7 @@ def analyse_texte(js):
 	ecoute(3)
 		
     if intent == 'Jasper':
-	parole('Je suis a ton service')
+	parole('Je suis za ton service')
 	ecoute(4)
     else:
 	try:
@@ -84,7 +84,7 @@ def analyse_texte(js):
 		ecoute(3)
     ecoute(2)
 
-parole("Je configure les donner d\'installation")	
+parole("Je configure les donner d'installation")	
 wit.init() #Lancement de wit
 # Mise en route et lancement de l'écoute	
 ecoute(1)

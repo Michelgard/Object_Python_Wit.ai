@@ -75,10 +75,10 @@ ComVal = la valeur de la commande ON ou OFF.
 		if (ComVal == "ON" or ComVal == "OFF"):
 			valeurSQL = self._lectureSQL(dbSQL, self._Led)
 			if (valeurSQL == False):
-				self._parole("Il y une erreur de chemin sur la base de donner")
+				self._parole("Il y a une erreur de chemin sur la base de donner")
 			else:
 				if (valeurSQL == ComVal):
-					self._parole("Attention la commande a deja ete valide !")
+					self._parole("Attention la commande a deja etais valider")
 				else:
 					requestURL = self._sendURL(self._IPVal, self._Led, ComVal)
 					if (requestURL):
@@ -89,8 +89,8 @@ ComVal = la valeur de la commande ON ou OFF.
 							else:
 								self._parole(self._textOFF)
 						else:
-							self._parole("Une erreur s\'est produite, merci de redire la commande")
+							self._parole("Une erreur s'est produite, merci de redire la commande")
 					else:
 						self._parole("Une erreur s'est produite. Merci de refaire la commande")
 		else :
-			self._parole("La commande n\'est pas valide !")
+			self._parole("La commande n'est pas valide")
