@@ -11,6 +11,10 @@ Quand une commande est reçue de wit.ai on passe la commande à l'objet concern�
 Il faut coupler cela avec un arduino, une carte internet et un émetteur en 433 Mhz. Une base de données permet de connaitre la position du contact On ou OFF pour une utilisation sur plusieurs système soit par la voix ou une page web. Je vous met le code de l'arduino sur github.
 
 INTALLATION SUR UN RASPBERRY PI TOUT NEUF
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+
 Changer port SSH : 
 sudo nano /etc/ssh/sshd_config
 sudo service ssh restart
