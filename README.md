@@ -38,6 +38,6 @@ sudo apt-get install python-mysqldb  pour la base de donnée
 
 sudo apt-get install mpg123 pour la parole
 
-Retrouver le bolg ici http://rasp-pi.fr.nf
+Retrouver le blog ici https://www.blog-de-michel.fr
 
 
